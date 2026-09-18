@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Copo Loyalty — Tarjetas de lealtad digitales para tu negocio</title>
+<meta name="description" content="Tarjetas de sellos digitales en Apple Wallet y Google Wallet. Sin app para tus clientes, tarjetas ilimitadas y datos de quién vuelve a tu negocio. Prueba gratis 7 días." />
+<meta name="theme-color" content="#0B1220" />
+<meta property="og:title" content="Copo Loyalty — Tarjetas de lealtad digitales para tu negocio" />
+<meta property="og:description" content="Tarjetas de sellos digitales en Apple Wallet y Google Wallet. Sin app para tus clientes, tarjetas ilimitadas y datos de quién vuelve a tu negocio. Prueba gratis 7 días." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="assets/wallet/pass-ios.png" />
+<link rel="icon" type="image/png" href="assets/brand/logo-mark.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<script>
+  /* Entrada del hero: se arma antes del primer pintado; el temporizador garantiza que nada quede invisible. */
+  document.documentElement.classList.add('intro');
+  setTimeout(function () { document.documentElement.classList.remove('intro'); }, 4000);
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue:        #2E5CF6;
+    --blue-dark:   #1E42D0;
+    --blue-bright: #5B82FF;
+    --blue-light:  #EEF2FF;
+    --orange:      #FB923C;
+    --green:       #22C55E;
+    --ink:         #0B1220;
+    --slate:       #4A5670;
+    --slate-light: #667085;
+    --bg:          #FFFFFF;
+    --bg-rgb:      255,255,255;
+    --surface:     #F6F8FC;
+    --surface-2:   #EEF1F8;
+    --border:      #E4E9F2;
+    --text:        var(--ink);
+    --text-muted:  var(--slate);
+    --card-shadow: 0 1px 2px rgba(11,18,32,0.04);
+    --radius-sm:   8px;
+    --radius-md:   14px;
+    --radius-lg:   20px;
+    --radius-xl:   28px;
+  }
+
+  html[data-theme="dark"] {
+    --blue:        #5B82FF;
+    --blue-dark:   #3A62E8;
+    --blue-bright: #83A0FF;
+    --blue-light:  rgba(91,130,255,0.14);
+    --ink:         #F3F6FC;
+    --slate:       #A7B0C4;
+    --slate-light: #94A0B8;
+    --bg:          #060A14;
+    --bg-rgb:      6,10,20;
+    --surface:     #0E1526;
+    --surface-2:   #131C33;
+    --border:      #202B45;
+    --text:        var(--ink);
+    --text-muted:  var(--slate);
+    --card-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  body {
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  button { font-family: inherit; cursor: pointer; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid var(--blue); outline-offset: 2px;
+  }
+
+  .skip-link {
+    position: absolute; left: -9999px; top: 0;
+    background: var(--blue); color: #fff;
+    padding: 12px 20px; border-radius: 0 0 8px 0;
+    z-index: 1000; font-weight: 700; text-decoration: none;
+  }
+  .skip-link:focus { left: 0; }
+
+  .container { max-width: 1180px; margin: 0 auto; }
+
+  /* ── NAVBAR ─────────────────────────────────────────── */
+  nav.site-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: 68px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    background: rgba(var(--bg-rgb), 0.82);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+  .brand img { width: 30px; height: 30px; }
+  .brand span:not(.brand-tag) { font-size: 21px; font-weight: 800; letter-spacing: -0.5px; color: var(--text); }
+  .brand-tag {
+    font-weight: 700; font-size: 11px; color: var(--blue);
+    background: var(--blue-light); padding: 3px 8px; border-radius: 6px; letter-spacing: 0.02em;
+  }
+
+  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+  .nav-links a:not(.btn-nav):not(.btn-ghost) {
+    font-size: 14.5px; font-weight: 600; color: var(--text-muted); text-decoration: none; transition: color 0.15s;
+  }
+  .nav-links a:not(.btn-nav):not(.btn-ghost):hover { color: var(--text); }
+
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+
+  .theme-toggle {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1.5px solid var(--border); background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text); position: relative; flex-shrink: 0;
+  }
+  .theme-toggle svg { position: absolute; width: 18px; height: 18px; }
+  .theme-toggle .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+  .theme-toggle .icon-moon { opacity: 0; transform: scale(0.5) rotate(-60deg); }
+  html[data-theme="dark"] .theme-toggle .icon-sun { opacity: 0; transform: scale(0.5) rotate(60deg); }
+  html[data-theme="dark"] .theme-toggle .icon-moon { opacity: 1; transform: scale(1) rotate(0deg); }
+  .theme-toggle .icon-sun, .theme-toggle .icon-moon { transition: opacity 0.35s ease, transform 0.35s ease; }
+  @keyframes toggle-pop { 0% { transform: scale(0.8); } 60% { transform: scale(1.08); } 100% { transform: scale(1); } }
+  .theme-toggle.is-popping { animation: toggle-pop 0.38s ease; }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent; color: var(--text) !important;
+    padding: 9px 16px; border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+    font-weight: 700 !important; font-size: 14px !important;
+    text-decoration: none; transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .btn-ghost:hover { border-color: var(--blue); color: var(--blue) !important; background: var(--blue-light); }
+
+  .btn-nav {
+    background: var(--blue); color: #fff !important;
+    padding: 10px 20px; border-radius: var(--radius-sm);
+    font-weight: 700 !important; font-size: 14px !important;
+    text-decoration: none; border: none;
+    transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 14px rgba(46,92,246,0.28);
+  }
+  .btn-nav:hover { background: var(--blue-dark) !important; transform: translateY(-1px); }
+
+  .hamburger {
+    display: none; width: 44px; height: 44px; border-radius: 10px;
+    border: 1.5px solid var(--border); background: var(--surface);
+    align-items: center; justify-content: center; color: var(--text);
+  }
+  .hamburger svg { width: 18px; height: 18px; }
+
+  .mobile-panel {
+    position: fixed; inset: 68px 0 0 0; background: var(--bg); z-index: 190;
+    padding: 28px 24px; display: none; flex-direction: column; gap: 4px; overflow-y: auto;
+  }
+  .mobile-panel.open { display: flex; }
+  .mobile-panel a {
+    padding: 16px 4px; font-size: 18px; font-weight: 700; text-decoration: none;
+    color: var(--text); border-bottom: 1px solid var(--border);
+  }
+  .mobile-panel .btn-nav, .mobile-panel .btn-ghost {
+    text-align: center; justify-content: center; margin-top: 16px; border-bottom: none; padding: 14px; font-size: 16px !important;
+  }
+
+  /* ── BUTTONS ─────────────────────────────────────────── */
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--blue); color: #fff; padding: 15px 28px;
+    border-radius: var(--radius-md); font-size: 16px; font-weight: 700;
+    text-decoration: none; border: none;
+    transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 8px 24px rgba(46,92,246,0.3);
+  }
+  .btn-primary:hover { background: var(--blue-dark); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(46,92,246,0.38); }
+  .btn-primary:active { transform: translateY(0) scale(0.98); }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface); color: var(--text); padding: 15px 28px;
+    border-radius: var(--radius-md); font-size: 16px; font-weight: 700;
+    text-decoration: none; border: 1.5px solid var(--border);
+    transition: border-color 0.15s, transform 0.15s, color 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-2px); }
+
+  .btn-white {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff; color: var(--blue-dark); padding: 15px 30px;
+    border-radius: var(--radius-md); font-size: 16px; font-weight: 800;
+    text-decoration: none; border: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(0,0,0,0.22); }
+
+  .btn-outline-white {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.4);
+    padding: 15px 28px; border-radius: var(--radius-md); font-size: 16px; font-weight: 700; text-decoration: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .btn-outline-white:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+
+  /* ── SECTION SHARED ─────────────────────────────────── */
+  .section { padding: 104px 5%; }
+  .section-head { max-width: 620px; }
+  .section-head.center { max-width: 640px; margin: 0 auto; text-align: center; }
+
+  .section-title {
+    font-size: clamp(27px, 3.6vw, 42px); font-weight: 800; letter-spacing: -1.4px;
+    line-height: 1.15; color: var(--text); margin-bottom: 16px;
+  }
+  .section-sub { font-size: 17.5px; color: var(--text-muted); line-height: 1.65; }
+
+  .reveal { opacity: 1; transform: none; }
+  .reveal.reveal-pending { opacity: 0; transform: translateY(22px); transition: opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1), transform 0.3s cubic-bezier(0.23, 1, 0.32, 1); }
+  .reveal.reveal-pending.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* ── HERO ────────────────────────────────────────────── */
+  .hero {
+    padding: 148px 5% 90px; text-align: center; position: relative; overflow: hidden;
+    background: radial-gradient(700px 420px at 50% -10%, var(--blue-light), transparent 70%), var(--bg);
+  }
+  #snow-field { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  #snow-field .flake { position: absolute; color: var(--blue); opacity: 0.25; will-change: transform; }
+  html[data-theme="dark"] #snow-field .flake { opacity: 0.35; }
+  @keyframes flake-drift { from { transform: translate(0,0) rotate(0deg); } to { transform: translate(var(--tx),var(--ty)) rotate(var(--rot)); } }
+
+  .hero > * { position: relative; z-index: 1; }
+  .hero h1 {
+    font-family: 'Outfit', 'Manrope', sans-serif;
+    font-size: clamp(28px, 4.4vw, 50px); font-weight: 700; line-height: 1.14; letter-spacing: -1.2px;
+    color: var(--text); max-width: 760px; margin: 0 auto 22px;
+  }
+  .hero p.lead { font-size: clamp(18px, 2.4vw, 23px); color: var(--text-muted); max-width: 600px; margin: 0 auto 30px; line-height: 1.6; }
+  .hero-cta { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .hero-microcopy { margin: 22px auto 56px; font-size: 13.5px; font-weight: 700; color: var(--text-muted); }
+
+  .hero-visual { position: relative; max-width: 900px; margin: 0 auto; }
+
+  /* ── FOOTER ─────────────────────────────────────────── */
+  footer { padding: 56px 5% 32px; border-top: 1px solid var(--border); }
+  .footer-top { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; margin-bottom: 40px; }
+  .footer-brand p { font-size: 13.5px; color: var(--text-muted); max-width: 260px; margin-top: 12px; line-height: 1.6; }
+  .footer-instagram {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 44px; box-sizing: border-box;
+    margin-top: 16px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 999px;
+    color: var(--text); background: var(--surface); font-size: 13px; font-weight: 750; text-decoration: none;
+    transition: color 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .footer-instagram svg { width: 17px; height: 17px; color: var(--blue); flex: 0 0 auto; }
+  .footer-instagram:hover { color: var(--blue); border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(46,92,246,0.12); }
+  .footer-cols { display: flex; gap: 64px; flex-wrap: wrap; }
+  .footer-col h5 { font-size: 12.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); margin-bottom: 16px; }
+  .footer-col a { display: block; font-size: 14px; color: var(--text); text-decoration: none; margin-bottom: 11px; font-weight: 600; }
+  .footer-col a:hover { color: var(--blue); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    padding-top: 28px; border-top: 1px solid var(--border); font-size: 13px; color: var(--slate-light);
+  }
+
+  /* ── FAB ────────────────────────────────────────────── */
+  .fab {
+    position: fixed; right: 22px; bottom: 22px; z-index: 150;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--blue); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    border: none; box-shadow: 0 12px 32px rgba(46,92,246,0.4);
+  }
+  .fab svg { width: 24px; height: 24px; }
+
+  /* ── MODAL ──────────────────────────────────────────── */
+  .modal-backdrop {
+    position: fixed; inset: 0; z-index: 300; background: rgba(6,10,20,0.55);
+    backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 24px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal-box {
+    background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 34px;
+    max-width: 460px; width: 100%; box-shadow: 0 40px 100px rgba(0,0,0,0.35);
+    max-height: 88vh; overflow-y: auto;
+    opacity: 0; transform: scale(0.94); transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .modal-backdrop.open .modal-box { opacity: 1; transform: scale(1); }
+  .modal-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; gap: 12px; }
+  .modal-head h3 { font-size: 21px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; }
+  .modal-close {
+    width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border);
+    background: var(--surface); display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); flex-shrink: 0;
+  }
+  .modal-close svg { width: 15px; height: 15px; }
+  .modal-box p.modal-sub { font-size: 13.5px; color: var(--text-muted); margin-bottom: 22px; line-height: 1.5; }
+
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 12.5px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .field input, .field select {
+    width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--border);
+    background: var(--surface); color: var(--text); font-size: 14.5px; font-family: inherit;
+  }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--blue); }
+  .field small { display: block; margin-top: 5px; font-size: 11.5px; color: var(--slate-light); }
+
+  .modal-submit {
+    width: 100%; padding: 14px; border-radius: var(--radius-md); border: none;
+    background: var(--blue); color: #fff; font-size: 15px; font-weight: 800;
+    margin-top: 6px; box-shadow: 0 10px 26px rgba(46,92,246,0.3);
+  }
+  .modal-note { font-size: 11.5px; color: var(--slate-light); text-align: center; margin-top: 14px; line-height: 1.5; }
+
+  /* ── PLACEHOLDER SYSTEM (§7.1) ─────────────────────── */
+  .ph {
+    position: relative; display: block; width: 100%; aspect-ratio: var(--ph-ratio, 16/10);
+    background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-lg); overflow: hidden;
+  }
+  .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ph.is-loaded { border-style: solid; box-shadow: 0 24px 64px -38px rgba(11,18,32,0.42); }
+  .ph.is-empty img { display: none; }
+  .ph .ph-fallback {
+    display: none; position: absolute; inset: 0; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px; padding: 22px; text-align: center; color: var(--slate-light);
+    font-family: 'SFMono-Regular', Menlo, Consolas, monospace; font-size: 12.5px; line-height: 1.5;
+  }
+  .ph.is-empty .ph-fallback { display: flex; }
+  .ph-fallback svg { width: 26px; height: 26px; opacity: 0.85; flex-shrink: 0; }
+  .ph-fallback .ph-id { font-family: 'Manrope', sans-serif; font-weight: 800; color: var(--text-muted); font-size: 12px; letter-spacing: 0.02em; }
+  .ph-fallback .ph-ratio { font-size: 10.5px; opacity: 0.85; }
+  .ph-fallback .ph-desc { max-width: 300px; }
+
+  /* Las fotos reales conservan su encuadre; las capturas de producto priorizan la UI. */
+  .hero-photo {
+    isolation: isolate; border: 0; background: #C9BBA8;
+    box-shadow: 0 34px 90px -44px rgba(11,18,32,0.62);
+  }
+  .hero-photo::before {
+    content: ''; position: absolute; inset: -28px; z-index: -2;
+    background: url('assets/wallet/hero-pass-ios-640.webp') center 42% / cover no-repeat;
+    filter: blur(24px) saturate(0.82); transform: scale(1.08); opacity: 0.72;
+  }
+  .hero-photo::after {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(90deg, rgba(11,18,32,0.28), transparent 24%, transparent 76%, rgba(11,18,32,0.28));
+  }
+  .hero-photo img { object-fit: contain; z-index: 1; filter: drop-shadow(0 18px 28px rgba(11,18,32,0.18)); }
+  .phone-shot { background: radial-gradient(circle at 50% 42%, var(--bg), var(--surface-2)); }
+  .phone-shot img { object-fit: contain; }
+  .product-shot img { object-fit: contain; object-position: center top; background: var(--surface); }
+
+  /* ── COMPARACIÓN CARTÓN VS DIGITAL (§6.2) ────────────── */
+  .compare-diptych { display: grid; grid-template-columns: 1fr auto 1fr; gap: 44px; align-items: start; max-width: 1180px; margin: 0 auto; }
+  .compare-col--paper { transform: rotate(-2deg); }
+  .compare-eyebrow { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px; }
+  .compare-col--paper .compare-eyebrow { color: var(--slate-light); }
+  .compare-col--digital .compare-eyebrow { color: var(--blue); }
+  .compare-notes { list-style: none; display: flex; flex-direction: column; gap: 15px; }
+  .compare-col--paper .compare-notes li {
+    font-size: 15px; font-weight: 600; line-height: 1.5; padding-left: 16px;
+    border-left: 2px dashed var(--border); color: var(--slate-light);
+  }
+  .compare-col--digital .compare-notes li {
+    font-size: 17.5px; font-weight: 700; line-height: 1.4; padding-left: 20px; position: relative; color: var(--text);
+  }
+  .compare-col--digital .compare-notes li::before {
+    content: ''; position: absolute; left: 0; top: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--blue);
+  }
+  .compare-divider { width: 1px; background: var(--border); align-self: stretch; }
+  .compare-closing {
+    max-width: 720px; margin: 60px auto 0; text-align: center; font-family: 'Outfit', sans-serif;
+    font-size: clamp(24px, 3.4vw, 34px); font-weight: 700; letter-spacing: -0.8px; line-height: 1.25; color: var(--text);
+  }
+  @media (max-width: 760px) {
+    .compare-diptych { grid-template-columns: 1fr; gap: 36px; }
+    .compare-divider { display: none; }
+    .compare-col--paper { transform: none; }
+  }
+
+  /* ── CÓMO FUNCIONA (§6.3) ────────────────────────────── */
+  .loy-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 56px; max-width: 1180px; margin-left: auto; margin-right: auto; }
+  .loy-step__num {
+    display: block; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 64px; line-height: 1;
+    color: var(--blue-light); margin-bottom: -14px; user-select: none;
+  }
+  .loy-step__body { position: relative; z-index: 1; margin-bottom: 20px; }
+  .loy-step__body h3 { font-size: 19px; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -0.3px; }
+  .loy-step__body p { font-size: 14.5px; color: var(--text-muted); line-height: 1.65; }
+  .loy-step .phone-shot { aspect-ratio: 14/9; }
+  @media (max-width: 860px) {
+    .loy-steps { grid-template-columns: 1fr; gap: 48px; padding-left: 22px; border-left: 2px solid var(--border); }
+    .loy-step__num { font-size: 44px; margin-bottom: -8px; }
+    .loy-step .phone-shot { max-width: 360px; margin-inline: auto; aspect-ratio: 4/7; }
+  }
+
+  /* ── SIMULADOR (§6.4) ────────────────────────────────── */
+  .sim-wrap { display: grid; grid-template-columns: minmax(260px, 0.72fr) minmax(300px, 1fr); gap: 48px; align-items: start; max-width: 1080px; margin: 48px auto 0; }
+  .sim-controls { display: flex; flex-direction: column; gap: 22px; }
+  .sim-field label, .sim-field-label { display: block; font-size: 12.5px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .sim-field input[type="text"] {
+    width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--border);
+    background: var(--surface); color: var(--text); font-size: 14.5px; font-family: inherit;
+  }
+  .sim-field input[type="text"]:focus { outline: none; border-color: var(--blue); }
+  .sim-swatches { display: flex; gap: 12px; flex-wrap: wrap; }
+  .sim-swatch { width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--sw); position: relative; padding: 0; }
+  .sim-swatch::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid var(--sw); opacity: 0; }
+  .sim-swatch.active::after { opacity: 1; }
+  .sim-tabs { display: inline-flex; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 4px; gap: 2px; }
+  .sim-tab { border: none; background: transparent; padding: 11px 18px; min-height: 40px; border-radius: 100px; font-size: 13px; font-weight: 700; color: var(--text-muted); }
+  .sim-tab.active { background: var(--blue); color: #fff; }
+  .sim-field input[type="range"] { width: 100%; accent-color: var(--blue); }
+
+  .sim-preview { display: flex; flex-direction: column; align-items: center; }
+  .sim-phone { position: relative; width: min(300px, 86vw); border-radius: 44px; background: var(--ink); padding: 14px; box-shadow: 0 40px 80px -20px rgba(11,18,32,0.35); }
+  html[data-theme="dark"] .sim-phone { background: #000; box-shadow: 0 40px 80px -20px rgba(0,0,0,0.6); }
+  .sim-phone__notch { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 110px; height: 20px; background: var(--ink); border-radius: 0 0 14px 14px; z-index: 3; }
+  html[data-theme="dark"] .sim-phone__notch { background: #000; }
+  .sim-phone__screen { position: relative; background: var(--bg); border-radius: 32px; overflow: hidden; padding: 30px 14px 20px; min-height: 420px; }
+  .sim-phone__statusbar { display: flex; justify-content: space-between; padding: 0 6px 16px; font-size: 12px; font-weight: 700; color: var(--text); }
+
+  .sim-pass { position: relative; border-radius: 20px; overflow: hidden; background: var(--surface); border: 1px solid var(--border); box-shadow: 0 14px 30px rgba(11,18,32,0.12); }
+  .sim-pass.is-shaking { animation: sim-shake 220ms ease; }
+  @keyframes sim-shake { 0% { transform: translateX(0); } 25% { transform: translateX(-3px); } 50% { transform: translateX(3px); } 75% { transform: translateX(-2px); } 100% { transform: translateX(0); } }
+  .sim-pass__top { display: flex; align-items: center; gap: 10px; padding: 16px; background: var(--sim-color); }
+  .sim-pass__initials { width: 36px; height: 36px; border-radius: 50%; background: #fff; color: var(--sim-color); font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .sim-pass__name { color: #fff; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: -0.2px; }
+  .sim-pass__body { padding: 16px; }
+  .sim-pass__label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .sim-pass__label { font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; color: var(--text-muted); }
+  .sim-pass__badge { display: none; font-size: 10px; font-weight: 800; color: #fff; background: var(--green); padding: 3px 9px; border-radius: 100px; }
+  .sim-pass.is-reward-ready .sim-pass__badge { display: inline-block; }
+  .sim-pass__counter { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 20px; color: var(--text); margin-bottom: 12px; font-variant-numeric: tabular-nums; }
+  .sim-pass__stamps { display: flex; flex-wrap: wrap; gap: 8px; max-width: 264px; margin-bottom: 14px; }
+  .sim-pass.program-puntos .sim-pass__stamps { display: none; }
+  .sim-stamp { width: 26px; height: 26px; border-radius: 50%; border: 1.5px dashed var(--border); flex-shrink: 0; transform: scale(1); transition: transform 220ms cubic-bezier(.2,.9,.3,1.2), background 0.15s, border-color 0.15s; }
+  .sim-stamp.is-filled { background: var(--sim-color); border: 1.5px solid var(--sim-color); }
+  .sim-stamp.just-stamped { transform: scale(1.4); }
+  .sim-pass__prize-row { border-top: 1px dashed var(--border); padding-top: 10px; display: flex; flex-direction: column; gap: 2px; }
+  .sim-pass__prize-label { font-size: 9.5px; font-weight: 800; letter-spacing: 0.1em; color: var(--text-muted); }
+  .sim-pass__prize-text { font-size: 13.5px; font-weight: 700; color: var(--text); word-break: break-word; }
+  .sim-pass__qr { border-top: 1px solid var(--border); padding: 14px 16px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .sim-pass__qr-code { width: 76px; height: 76px; color: var(--text); }
+  .sim-pass__qr-caption { font-size: 10.5px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+  .sim-toast {
+    position: absolute; top: 10px; left: 10px; right: 10px; z-index: 5; display: flex; gap: 10px; align-items: flex-start;
+    background: var(--ink); color: #fff; padding: 10px 12px; border-radius: 16px; box-shadow: 0 14px 30px rgba(0,0,0,0.3);
+    opacity: 0; transform: translateY(-14px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none;
+  }
+  html[data-theme="dark"] .sim-toast { background: #000; }
+  .sim-toast.is-visible { opacity: 1; transform: translateY(0); }
+  .sim-toast__icon { width: 28px; height: 28px; border-radius: 8px; background: var(--sim-color, var(--blue)); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; color: #fff; }
+  .sim-toast__body { font-size: 11.5px; line-height: 1.4; }
+  .sim-toast__body strong { display: block; font-size: 12px; }
+
+  .sim-actions { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 24px; width: 100%; max-width: 300px; }
+  .sim-actions .btn-primary { width: 100%; justify-content: center; }
+  .sim-reset { background: none; border: none; font-size: 13px; font-weight: 700; color: var(--text-muted); text-decoration: underline; }
+  .sim-reset:hover { color: var(--blue); }
+  .sim-footnote { margin-top: 16px; font-size: 11.5px; color: var(--slate-light); text-align: center; max-width: 300px; }
+
+  @media (max-width: 820px) { .sim-wrap { grid-template-columns: 1fr; gap: 40px; } .sim-preview { order: -1; } }
+
+  /* ── WALLET POR DENTRO (§6.5) ────────────────────────── */
+  .wallet-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: center; max-width: 1180px; margin: 0 auto; }
+  .wallet-images { display: flex; width: 100%; max-width: 360px; margin-inline: auto; }
+  .wallet-ph { flex: 1; }
+  .wallet-notes { display: flex; flex-direction: column; }
+  .wallet-notes p { font-size: 16px; line-height: 1.7; color: var(--text); padding: 20px 0; border-top: 1px solid var(--border); }
+  .wallet-notes p:first-child { border-top: none; padding-top: 0; }
+  @media (max-width: 900px) { .wallet-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+  /* ── PANEL DEL DUEÑO (§6.6) ──────────────────────────── */
+  .owner-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 56px; align-items: center; max-width: 1180px; margin: 0 auto; }
+  .owner-item { padding: 22px 0; border-top: 1px solid var(--border); }
+  .owner-item:first-child { border-top: none; padding-top: 0; }
+  .owner-item h3 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: clamp(21px, 2.4vw, 26px); letter-spacing: -0.5px; color: var(--text); margin-bottom: 8px; }
+  .owner-item p { font-size: 14.5px; color: var(--text-muted); line-height: 1.6; }
+  .owner-closing { margin-top: 24px; font-size: 14px; color: var(--text-muted); line-height: 1.6; padding-top: 22px; border-top: 1px solid var(--border); }
+  @media (max-width: 900px) { .owner-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+  /* ── CÓMO SE ESCANEA (§6.7) ──────────────────────────── */
+  .scan-rows { max-width: 900px; margin: 0 auto; border-top: 1px solid var(--border); }
+  .scan-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 28px 24px; border-bottom: 1px solid var(--border); }
+  .scan-row--a { background: var(--bg); }
+  .scan-row--b { background: var(--surface); }
+  .scan-row__text h3 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: clamp(18px, 2vw, 22px); color: var(--text); margin-bottom: 6px; letter-spacing: -0.3px; }
+  .scan-row__text p { font-size: 14px; color: var(--text-muted); line-height: 1.6; max-width: 480px; }
+  .scan-row__tag {
+    flex-shrink: 0; font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--blue); background: var(--blue-light); padding: 6px 12px; border-radius: 100px; white-space: nowrap;
+  }
+  @media (max-width: 600px) { .scan-row { flex-direction: column; align-items: flex-start; gap: 12px; } }
+
+  /* ── MARQUEE GIROS (§6.8) ────────────────────────────── */
+  .trade-lead { text-align: center; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: clamp(20px, 2.6vw, 28px); letter-spacing: -0.5px; margin-bottom: 40px; }
+  .trade-marquee { position: relative; max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+  .trade-marquee__toggle {
+    align-self: center; display: inline-flex; min-height: 44px; align-items: center; gap: 7px; padding: 8px 14px;
+    color: var(--text-muted); background: transparent; border: 1px solid var(--border); border-radius: 100px;
+    font-size: 12px; font-weight: 700; margin-bottom: 6px; transition: border-color 0.18s, color 0.18s, background 0.18s;
+  }
+  .trade-marquee__toggle svg { width: 13px; height: 13px; }
+  .trade-marquee__toggle:hover { color: var(--blue); background: var(--blue-light); border-color: var(--blue); }
+  .trade-row { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%); }
+  .trade-track { display: flex; width: max-content; gap: 56px; will-change: transform; }
+  .trade-row--a .trade-track { animation: trade-scroll-left 34s linear infinite; }
+  .trade-row--b .trade-track { animation: trade-scroll-right 30s linear infinite; }
+  .trade-marquee.is-paused .trade-track { animation-play-state: paused; }
+  .trade-set { flex: 0 0 auto; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: clamp(18px, 2.6vw, 26px); color: var(--text-muted); white-space: nowrap; letter-spacing: -0.3px; }
+  @keyframes trade-scroll-left { to { transform: translateX(calc(-50% - 28px)); } }
+  @keyframes trade-scroll-right { from { transform: translateX(calc(-50% - 28px)); } to { transform: translateX(0); } }
+  @media (prefers-reduced-motion: reduce) {
+    .trade-row { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+    .trade-track { animation: none; }
+    .trade-marquee__toggle { display: none; }
+  }
+
+  /* ── SECCIÓN OSCURA — SI YA USAS EL POS (§6.9) ───────── */
+  .dark-cta-section { padding: 104px 5%; background: var(--ink); color: #fff; text-align: center; }
+  html[data-theme="dark"] .dark-cta-section { background: var(--surface); }
+  .dark-cta-content { max-width: 640px; margin: 0 auto; }
+  .dark-cta-content h2 { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: clamp(26px, 3.6vw, 40px); letter-spacing: -1px; line-height: 1.2; margin-bottom: 16px; }
+  .dark-cta-content p { font-size: 16px; line-height: 1.65; color: #A7B0C4; margin-bottom: 14px; }
+  .dark-cta-highlight { color: #fff !important; font-weight: 700; font-size: 17px !important; }
+  .dark-cta-content .btn-outline-white { margin-top: 14px; }
+  .dark-cta-media { max-width: 900px; margin: 56px auto 0; background: rgba(255,255,255,0.04) !important; border-color: rgba(255,255,255,0.18) !important; }
+  .dark-cta-media .ph-fallback { color: rgba(255,255,255,0.55); }
+  .dark-cta-media .ph-fallback .ph-id { color: rgba(255,255,255,0.85); }
+
+  /* ── TRUSTED CAROUSEL (negocios reales — copiado del POS) ── */
+  .trusted-strip { padding: 32px 5% 40px; }
+  .trusted-shell {
+    max-width: 1180px; margin: 0 auto; display: grid;
+    grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.28fr); align-items: center;
+    gap: clamp(28px, 4vw, 56px); padding: clamp(30px, 4vw, 48px); overflow: hidden;
+    background: linear-gradient(120deg, var(--surface), var(--surface-2)); border: 1px solid var(--border); border-radius: var(--radius-xl);
+  }
+  .trusted-eyebrow { margin-bottom: 10px; color: var(--blue); font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+  .trusted-intro h2 { max-width: 320px; margin-bottom: 10px; color: var(--text); font-family: 'Outfit', sans-serif; font-size: clamp(26px, 3vw, 34px); font-weight: 700; letter-spacing: -1.1px; line-height: 1.1; }
+  .trusted-intro p:last-child { max-width: 350px; color: var(--text-muted); font-size: 14.5px; line-height: 1.6; }
+  .trusted-carousel-controls { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
+  .trusted-carousel-toggle {
+    display: inline-flex; min-height: 44px; align-items: center; gap: 7px; padding: 8px 12px; color: var(--text-muted);
+    background: transparent; border: 1px solid var(--border); border-radius: 999px; font-size: 12px; font-weight: 700; line-height: 1;
+    transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+  }
+  .trusted-carousel-toggle:hover { color: var(--blue); background: var(--blue-light); border-color: var(--blue); }
+  .trusted-carousel-toggle svg { width: 13px; height: 13px; }
+  .trusted-carousel {
+    --trusted-gap: 16px; min-width: 0; overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  }
+  .trusted-carousel__track { display: flex; width: max-content; gap: var(--trusted-gap); animation: trusted-carousel-scroll 26s linear 1s infinite; will-change: transform; }
+  .trusted-carousel__set { display: flex; flex: 0 0 auto; gap: var(--trusted-gap); margin: 0; padding: 0; list-style: none; }
+  .trusted-card { width: clamp(164px, 15vw, 194px); min-height: 238px; overflow: hidden; color: var(--trusted-card-ink); background: var(--trusted-card-bottom); border: 1px solid rgba(255,255,255,0.45); border-radius: 18px; box-shadow: 0 16px 32px rgba(11,18,32,0.18); }
+  .trusted-card--titto { --trusted-card-top: #E74339; --trusted-card-bottom: #FFF5F3; --trusted-card-ink: #34110E; --trusted-card-top-ink: #FFFFFF; }
+  .trusted-card--chunky { --trusted-card-top: #FFD95B; --trusted-card-bottom: #FFFBE7; --trusted-card-ink: #2A220B; --trusted-card-top-ink: #2A220B; }
+  .trusted-card__top { display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; min-height: 142px; padding: 15px; background: var(--trusted-card-top); }
+  .trusted-card__eyebrow { color: var(--trusted-card-top-ink); font-size: 9px; font-weight: 800; letter-spacing: 0.1em; opacity: 0.72; text-transform: uppercase; }
+  .trusted-card__logo { display: flex; width: 72px; height: 72px; align-items: center; justify-content: center; overflow: hidden; background: #fff; border: 1px solid rgba(11,18,32,0.08); border-radius: 14px; box-shadow: 0 8px 18px rgba(11,18,32,0.14); }
+  .trusted-card img { width: 100%; height: 100%; object-fit: cover; }
+  .trusted-card__body { display: flex; min-height: 95px; flex-direction: column; justify-content: center; padding: 15px; }
+  .trusted-card__name { display: block; color: var(--trusted-card-ink); font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.35px; line-height: 1.15; }
+  .trusted-card__type { display: block; margin-top: 6px; color: var(--trusted-card-ink); font-size: 12px; font-weight: 600; line-height: 1.35; opacity: 0.72; }
+  .trusted-carousel:hover .trusted-carousel__track { animation-play-state: paused; }
+  .trusted-carousel.is-paused .trusted-carousel__track { animation-play-state: paused; }
+  @keyframes trusted-carousel-scroll { to { transform: translate3d(calc(-50% - (var(--trusted-gap) / 2)), 0, 0); } }
+  @media (max-width: 920px) { .trusted-shell { grid-template-columns: 1fr; gap: 28px; } .trusted-intro { text-align: center; } .trusted-intro h2, .trusted-intro p:last-child { margin-left: auto; margin-right: auto; } }
+  @media (max-width: 640px) { .trusted-strip { padding: 20px 6% 40px; } .trusted-shell { gap: 24px; padding: 28px 0; border-radius: 20px; } .trusted-intro { padding: 0 20px; } .trusted-carousel-controls { justify-content: center; } .trusted-card { width: 164px; min-height: 226px; } .trusted-card__top { min-height: 134px; } }
+  @media (prefers-reduced-motion: reduce) {
+    .trusted-carousel-controls { display: none; }
+    .trusted-carousel { overflow-x: auto; -webkit-mask-image: none; mask-image: none; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+    .trusted-carousel__track { animation: none; }
+    .trusted-carousel__set[aria-hidden="true"] { display: none; }
+    .trusted-card { scroll-snap-align: start; }
+  }
+
+  /* ── PRECIOS (§6.11) ─────────────────────────────────── */
+  .billing-toggle { display: flex; justify-content: center; margin: 40px auto 8px; }
+  .toggle-pill { display: inline-flex; background: var(--bg); border: 1px solid var(--border); border-radius: 100px; padding: 4px; gap: 2px; }
+  .toggle-pill button { border: none; background: transparent; padding: 9px 20px; border-radius: 100px; font-size: 13.5px; font-weight: 700; color: var(--text-muted); }
+  .toggle-pill button.active { background: var(--blue); color: #fff; }
+
+  .price-table-wrap { max-width: 820px; margin: 40px auto 0; overflow-x: auto; }
+  table.price-table { width: 100%; border-collapse: collapse; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+  .price-table th { text-align: left; padding: 14px 20px; font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); border-bottom: 1px solid var(--border); }
+  .price-table td { padding: 16px 20px; font-size: 15px; color: var(--text); border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .price-table tr:last-child td { border-bottom: none; }
+  .price-table .price-cell { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 19px; }
+  .price-table tr.is-featured { background: var(--blue-light); }
+  .price-table tr.is-featured td { font-weight: 700; }
+  .price-table .plan-cta { padding: 9px 18px; border-radius: var(--radius-sm); background: var(--blue); color: #fff; font-size: 13px; font-weight: 700; border: none; }
+  .price-table .plan-cta:hover { background: var(--blue-dark); }
+  .pricing-notes { max-width: 700px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 12px; }
+  .pricing-notes p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+  .pricing-notes strong { color: var(--text); }
+  @media (max-width: 600px) { .price-table th, .price-table td { padding: 12px 10px; font-size: 13px; } .price-table .price-cell { font-size: 16px; } .price-table .plan-cta { padding: 8px 12px; font-size: 12px; } }
+
+  /* ── FAQ ────────────────────────────────────────────── */
+  .faq { padding: 104px 5%; max-width: 780px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid var(--border); }
+  .faq-q { width: 100%; text-align: left; background: none; border: none; padding: 22px 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 16px; font-weight: 700; color: var(--text); }
+  .faq-q svg { width: 18px; height: 18px; color: var(--text-muted); flex-shrink: 0; transition: transform 0.25s ease; }
+  .faq-item.open .faq-q svg { transform: rotate(45deg); color: var(--blue); }
+  .faq-a { overflow: visible; }
+  .faq.is-enhanced .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.25s cubic-bezier(0.23, 1, 0.32, 1); }
+  .faq-a p { font-size: 14.5px; color: var(--text-muted); line-height: 1.7; padding-bottom: 22px; max-width: 640px; }
+
+  /* ── CTA FINAL ──────────────────────────────────────── */
+  .cta-section { padding: 104px 5%; background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%); text-align: center; color: #fff; position: relative; overflow: hidden; }
+  .cta-section h2 { font-size: clamp(27px, 4vw, 46px); font-weight: 800; letter-spacing: -1.6px; line-height: 1.15; margin-bottom: 16px; }
+  .cta-section p.lead { font-size: 17px; opacity: 0.88; margin-bottom: 36px; line-height: 1.6; }
+  .cta-buttons { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+  /* ── RESPONSIVE NAV / GENERAL ─────────────────────────── */
+  @media (max-width: 1100px) { .nav-links { display: none; } .hamburger { display: flex; } }
+  @media (max-width: 768px) {
+    .hero { padding: 118px 6% 60px; }
+    .section, .dark-cta-section, .cta-section, .faq { padding: 64px 6%; }
+    .footer-top { flex-direction: column; gap: 28px; }
+    .compare-diptych, .loy-steps, .wallet-grid, .owner-grid { gap: 32px; }
+  }
+  @media (max-width: 600px) {
+    nav.site-nav { padding-inline: 6%; }
+    .nav-actions > .btn-ghost, .nav-actions > .btn-nav { display: none; }
+    .brand img { width: 27px; height: 27px; }
+    .brand span:not(.brand-tag) { font-size: 19px; }
+  }
+</style>
+<link rel="stylesheet" href="assets/landing.css" />
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Saltar al contenido</a>
+
+<!-- NAVBAR -->
+<nav class="site-nav nav-pill" aria-label="Principal">
+  <a href="#" class="brand" aria-label="Copo Loyalty — inicio">
+    <img src="assets/brand/logo-mark.png" alt="" aria-hidden="true" width="30" height="30" />
+    <span>copo</span>
+    <span class="brand-tag">loyalty</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#como-funciona">Cómo funciona</a></li>
+    <li><a href="#simulador">Tu tarjeta</a></li>
+    <li><a href="#funciones">Funciones</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#preguntas">Preguntas</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar a modo oscuro" aria-pressed="false">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.5M12 19v2.5M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2.5 12H5M19 12h2.5M4.2 19.8L6 18M18 6l1.8-1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1110.2 3.3a7 7 0 009.8 11.2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+    </button>
+    <a href="https://www.copopos.com/" class="btn-ghost" aria-label="Ir al sitio del POS de Copo">¿Buscas el POS? →</a>
+    <button class="btn-nav" type="button" data-open-modal data-plan="Prueba gratis 7 días">Prueba gratis <span aria-hidden="true">↗</span></button>
+    <button class="hamburger" id="hamburgerBtn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobilePanel">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</nav>
+
+<nav class="mobile-panel" id="mobilePanel" aria-label="Navegación móvil">
+  <a href="#como-funciona">Cómo funciona</a>
+  <a href="#simulador">Tu tarjeta</a>
+  <a href="#funciones">Funciones</a>
+  <a href="#precios">Precios</a>
+  <a href="#preguntas">Preguntas</a>
+  <button class="btn-nav" type="button" data-open-modal data-plan="Prueba gratis 7 días">Prueba gratis 7 días</button>
+  <a href="https://www.copopos.com/" class="btn-ghost">¿Buscas el POS? →</a>
+</nav>
+
+<main id="main-content">
+
+  <!-- 1. HERO -->
+  <section class="hero hero-night" aria-labelledby="hero-title">
+    <div class="lp-stage">
+      <div class="lp-bg" aria-hidden="true"><div class="lp-snow" id="lpSnowA"></div><div class="lp-snow" id="lpSnowB"></div></div>
+      <div class="lp-stack">
+        <p class="lp-badge"><span aria-hidden="true"></span> Tarjetas de sellos en Apple Wallet y Google Wallet</p>
+        <h1 class="lp-h1" id="hero-title"><span class="lp-line">Tu cliente <em>vuelve.</em></span><span class="lp-line">Copo te dice quién.</span></h1>
+        <p class="lp-sub">La tarjeta de sellos de tu negocio, dentro del celular de tu cliente. <b>No descarga nada</b>, no se pierde, y tú ves quién regresa y cada cuánto.</p>
+        <div class="lp-cta">
+          <button class="lp-contact" type="button" data-open-modal data-plan="Prueba gratis 7 días">Prueba gratis 7 días <span aria-hidden="true">↗</span></button>
+          <a class="lp-cta-alt" href="#simulador">Arma tu tarjeta <span aria-hidden="true">→</span></a>
+        </div>
+        <p class="lp-micro">Se instala en un día · Sin tarjeta de crédito · Tarjetas ilimitadas</p>
+      </div>
+      <div class="lp-canvas" id="lpCanvas">
+        <div class="lp-showcase">
+          <div class="lp-ring" id="lpRing" aria-hidden="true"></div>
+          <div class="lp-browser" aria-hidden="true">
+            <div class="lp-bar">
+              <div class="lp-dots"><i></i><i></i><i></i></div>
+              <div class="lp-omni"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg><span>dashboard.copopos.com</span></div>
+            </div>
+            <div class="lp-page">
+              <div class="db-side">
+                <div class="db-logo"><img src="assets/brand/logo-mark.png" alt="" width="15" height="15" /> Copo</div>
+                <span class="db-kicker">LOYALTY</span>
+                <div class="db-nav"><span class="on"><i></i>Programas</span><span><i></i>Ajustes</span></div>
+              </div>
+              <div class="db-main">
+                <div class="db-top">
+                  <div><h4>Café Brisa</h4><p>Gestiona rendimiento, clientes, recompensas y la distribución de tu programa.</p></div>
+                  <div class="db-actions"><span>Pausar</span><span>QR de registro</span><span class="on">Editar</span></div>
+                </div>
+                <div class="db-tabs"><span class="on">Dashboard</span><span>Clientes</span><span>Recompensas</span><span>Transacciones</span><span>Anomalías</span><span>Notificaciones</span></div>
+                <div class="db-kpis">
+                  <div><small>Clientes</small><strong>248</strong><em>+18 este mes</em></div>
+                  <div><small>Visitas del mes</small><strong>1,132</strong><em>+9% vs. mes pasado</em></div>
+                  <div><small>Premios entregados</small><strong>64</strong><em>+12 este mes</em></div>
+                  <div><small>Regresan</small><strong>71%</strong><em>en 30 días</em></div>
+                </div>
+                <div class="db-row">
+                  <div class="db-card"><h5>Visitas por semana</h5><div class="db-bars"><i style="height:42%"></i><i style="height:55%"></i><i style="height:48%"></i><i style="height:62%"></i><i style="height:58%"></i><i style="height:74%"></i><i style="height:69%"></i><i class="on" style="height:88%"></i></div></div>
+                  <div class="db-card"><h5>Últimas visitas</h5><div class="db-list"><span><b>Ana T.</b> sello 7/10</span><span><b>Luis R.</b> sello 3/10</span><span><b>Mariana G.</b> premio entregado</span><span><b>Jorge P.</b> sello 5/10</span></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. LA TARJETA DE CARTÓN VS. LA DIGITAL -->
+  <section class="section" id="comparacion">
+    <h2 class="sr-only">Tarjeta de cartón contra tarjeta digital de Copo</h2>
+    <div class="compare-diptych">
+      <div class="compare-col compare-col--paper reveal">
+        <p class="compare-eyebrow">La de cartón</p>
+        <ul class="compare-notes">
+          <li>Se pierde en la cartera</li>
+          <li>Se moja, se rompe, se olvida</li>
+          <li>No sabes quién es tu cliente</li>
+          <li>El sello se falsifica con cualquier pluma</li>
+          <li>Se acaba y hay que reimprimir</li>
+        </ul>
+      </div>
+      <div class="compare-divider" aria-hidden="true"></div>
+      <div class="compare-col compare-col--digital reveal">
+        <p class="compare-eyebrow">La de Copo</p>
+        <ul class="compare-notes">
+          <li>Vive en Apple Wallet y Google Wallet</li>
+          <li>El cliente no descarga nada</li>
+          <li>Cada sello queda registrado con quién lo puso</li>
+          <li>El QR cambia cada 30 segundos</li>
+          <li>Nunca se acaba</li>
+        </ul>
+      </div>
+    </div>
+    <p class="compare-closing reveal">Es la misma tarjeta de toda la vida. Solo que esta sí te dice quién volvió.</p>
+  </section>
+
+  <!-- 3. CÓMO FUNCIONA -->
+  <section class="section" id="como-funciona">
+    <div class="section-head center reveal">
+      <h2 class="section-title">Cómo funciona</h2>
+    </div>
+    <div class="loy-steps">
+      <article class="loy-step reveal">
+        <span class="loy-step__num" aria-hidden="true">1</span>
+        <div class="loy-step__body">
+          <h3>Diseñas tu tarjeta</h3>
+          <p>Eliges color, logo, cuántos sellos y qué premio das. Nosotros la dejamos lista contigo en la instalación.</p>
+        </div>
+        <figure class="ph product-shot" style="--ph-ratio:14/9" data-ph="IMG-04 · 14:9 · Captura de UI — dashboard donde se diseña la tarjeta: color, logo, meta de sellos, premio">
+          <img src="assets/screenshots/dashboard-diseno.png" alt="Editor de tarjeta de lealtad en el dashboard de Copo, con color, meta de sellos y premio configurados" width="1897" height="865" loading="lazy" decoding="async" />
+          <div class="ph-fallback">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="8.5" cy="9.5" r="1.4" stroke="currentColor" stroke-width="1.4"/><path d="M4 16l5-4.5 4 3.5 3-2.5 4 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="ph-id">IMG-04</span><span class="ph-ratio">14:9</span>
+            <span class="ph-desc">Captura de UI — dashboard donde se diseña la tarjeta: color, logo, meta de sellos, premio</span>
+          </div>
+        </figure>
+      </article>
+      <article class="loy-step reveal">
+        <span class="loy-step__num" aria-hidden="true">2</span>
+        <div class="loy-step__body">
+          <h3>Tu cliente la guarda</h3>
+          <p>Escanea un QR en tu mostrador, deja su nombre y teléfono, y la tarjeta se agrega a su Wallet. Toma menos de un minuto y no instala ninguna app.</p>
+        </div>
+        <figure class="ph phone-shot" style="--ph-ratio:4/7" data-ph="IMG-05 · 4:7 · Captura de UI — página de registro del cliente en celular (loyalty-join)">
+          <picture>
+            <source type="image/webp" srcset="assets/screenshots/registro-cliente-600.webp 600w, assets/screenshots/registro-cliente.webp 1086w" sizes="(max-width: 860px) min(88vw, 360px), 360px" />
+            <img src="assets/screenshots/registro-cliente.png" alt="Página de registro del cliente en el celular para unirse a la tarjeta de lealtad" width="1086" height="1448" loading="lazy" decoding="async" />
+          </picture>
+          <div class="ph-fallback">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="8.5" cy="9.5" r="1.4" stroke="currentColor" stroke-width="1.4"/><path d="M4 16l5-4.5 4 3.5 3-2.5 4 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="ph-id">IMG-05</span><span class="ph-ratio">4:7</span>
+            <span class="ph-desc">Captura de UI — página de registro del cliente en celular (loyalty-join)</span>
+          </div>
+        </figure>
+      </article>
+      <article class="loy-step reveal">
+        <span class="loy-step__num" aria-hidden="true">3</span>
+        <div class="loy-step__body">
+          <h3>Vuelve, y lo sabes</h3>
+          <p>Cada visita le suma un sello y le llega el aviso a su teléfono. Tú ves quién vuelve y quién ya no.</p>
+        </div>
+        <figure class="ph product-shot" style="--ph-ratio:14/9" data-ph="IMG-06 · 14:9 · Captura de UI — lista de clientes / analytics: quién vuelve y cada cuánto">
+          <img src="assets/screenshots/dashboard-clientes.png" alt="Lista de clientes y analítica de retorno en el dashboard de Copo Loyalty" width="1895" height="865" loading="lazy" decoding="async" />
+          <div class="ph-fallback">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="8.5" cy="9.5" r="1.4" stroke="currentColor" stroke-width="1.4"/><path d="M4 16l5-4.5 4 3.5 3-2.5 4 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="ph-id">IMG-06</span><span class="ph-ratio">14:9</span>
+            <span class="ph-desc">Captura de UI — lista de clientes / analytics: quién vuelve y cada cuánto</span>
+          </div>
+        </figure>
+      </article>
+    </div>
+  </section>
+
+  <!-- 4. SIMULADOR -->
+  <section class="section sim-section" id="simulador">
+    <div class="section-head center reveal">
+      <h2 class="section-title">Arma tu tarjeta ahora mismo</h2>
+      <p class="section-sub">Cámbiale el nombre, el color y el premio. Así se va a ver en el teléfono de tu cliente.</p>
+    </div>
+
+    <div class="sim-wrap reveal">
+      <div class="sim-controls">
+        <div class="sim-field">
+          <label for="sim-name">Nombre del negocio</label>
+          <input id="sim-name" type="text" maxlength="22" value="Cafetería La Nube" />
+        </div>
+        <div class="sim-field">
+          <span class="sim-field-label">Color de marca</span>
+          <div class="sim-swatches" id="simSwatches" role="group" aria-label="Color de marca">
+            <button type="button" class="sim-swatch active" style="--sw:#2E5CF6" data-color="#2E5CF6" aria-label="Azul" aria-pressed="true"></button>
+            <button type="button" class="sim-swatch" style="--sw:#E74339" data-color="#E74339" aria-label="Rojo" aria-pressed="false"></button>
+            <button type="button" class="sim-swatch" style="--sw:#0F766E" data-color="#0F766E" aria-label="Verde azulado" aria-pressed="false"></button>
+            <button type="button" class="sim-swatch" style="--sw:#B45309" data-color="#B45309" aria-label="Naranja oscuro" aria-pressed="false"></button>
+            <button type="button" class="sim-swatch" style="--sw:#7C2D6B" data-color="#7C2D6B" aria-label="Morado" aria-pressed="false"></button>
+            <button type="button" class="sim-swatch" style="--sw:#111827" data-color="#111827" aria-label="Negro" aria-pressed="false"></button>
+          </div>
+        </div>
+        <div class="sim-field">
+          <span class="sim-field-label">Programa</span>
+          <div class="sim-tabs" id="simTabs">
+            <button type="button" class="sim-tab active" data-program="sellos" aria-pressed="true">Sellos</button>
+            <button type="button" class="sim-tab" data-program="puntos" aria-pressed="false">Puntos</button>
+          </div>
+        </div>
+        <div class="sim-field" id="simGoalField">
+          <label for="sim-goal">Meta: <span id="simGoalValue">8</span> sellos</label>
+          <input id="sim-goal" type="range" min="4" max="12" value="8" />
+        </div>
+        <div class="sim-field">
+          <label for="sim-prize">Premio</label>
+          <input id="sim-prize" type="text" maxlength="26" value="Un café gratis" />
+        </div>
+      </div>
+
+      <div class="sim-preview">
+        <div class="sim-phone">
+          <div class="sim-phone__notch" aria-hidden="true"></div>
+          <div class="sim-phone__screen">
+            <div class="sim-phone__statusbar" aria-hidden="true"><span>9:41</span><span>●●●●</span></div>
+
+            <div class="sim-toast" id="simToast" aria-live="polite">
+              <div class="sim-toast__icon" id="simToastIcon">CN</div>
+              <div class="sim-toast__body">
+                <strong>Copo</strong>
+                <span id="simToastText">Ya tienes tu premio en Cafetería La Nube 🎉</span>
+              </div>
+            </div>
+
+            <div class="sim-pass" id="simPass" style="--sim-color:#2E5CF6">
+              <div class="sim-pass__top">
+                <div class="sim-pass__initials" id="simInitials">CN</div>
+                <span class="sim-pass__name" id="simPassName">Cafetería La Nube</span>
+              </div>
+              <div class="sim-pass__body">
+                <div class="sim-pass__label-row">
+                  <span class="sim-pass__label" id="simProgramLabel">SELLOS</span>
+                  <span class="sim-pass__badge" id="simRewardBadge">Premio listo</span>
+                </div>
+                <div class="sim-pass__counter" id="simCounter">0 de 8</div>
+                <div class="sim-pass__stamps" id="simStamps"></div>
+                <div class="sim-pass__prize-row">
+                  <span class="sim-pass__prize-label">PREMIO</span>
+                  <span class="sim-pass__prize-text" id="simPrizeText">Un café gratis</span>
+                </div>
+              </div>
+              <div class="sim-pass__qr">
+                <div class="sim-pass__qr-code" aria-hidden="true">
+                  <svg viewBox="0 0 21 21" width="100%" height="100%" fill="currentColor">
+                    <rect x="0" y="0" width="7" height="7"/><rect x="1" y="1" width="5" height="5" fill="var(--surface)"/><rect x="2" y="2" width="3" height="3"/>
+                    <rect x="14" y="0" width="7" height="7"/><rect x="15" y="1" width="5" height="5" fill="var(--surface)"/><rect x="16" y="2" width="3" height="3"/>
+                    <rect x="0" y="14" width="7" height="7"/><rect x="1" y="15" width="5" height="5" fill="var(--surface)"/><rect x="2" y="16" width="3" height="3"/>
+                    <rect x="9" y="0" width="1" height="1"/><rect x="11" y="0" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="12" y="3" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/><rect x="11" y="5" width="1" height="1"/><rect x="9" y="6" width="1" height="1"/>
+                    <rect x="0" y="9" width="1" height="1"/><rect x="2" y="9" width="1" height="1"/><rect x="4" y="9" width="1" height="1"/><rect x="0" y="11" width="1" height="1"/><rect x="3" y="11" width="1" height="1"/><rect x="5" y="11" width="1" height="1"/><rect x="0" y="13" width="1" height="1"/><rect x="2" y="13" width="1" height="1"/>
+                    <rect x="9" y="9" width="1" height="1"/><rect x="11" y="9" width="1" height="1"/><rect x="13" y="9" width="1" height="1"/><rect x="9" y="11" width="1" height="1"/><rect x="12" y="11" width="1" height="1"/><rect x="10" y="13" width="1" height="1"/><rect x="13" y="13" width="1" height="1"/>
+                    <rect x="16" y="9" width="1" height="1"/><rect x="18" y="9" width="1" height="1"/><rect x="20" y="9" width="1" height="1"/><rect x="16" y="11" width="1" height="1"/><rect x="19" y="11" width="1" height="1"/><rect x="17" y="13" width="1" height="1"/><rect x="20" y="13" width="1" height="1"/>
+                    <rect x="9" y="16" width="1" height="1"/><rect x="11" y="16" width="1" height="1"/><rect x="13" y="16" width="1" height="1"/><rect x="9" y="18" width="1" height="1"/><rect x="12" y="18" width="1" height="1"/><rect x="10" y="20" width="1" height="1"/><rect x="13" y="20" width="1" height="1"/>
+                    <rect x="16" y="16" width="1" height="1"/><rect x="18" y="16" width="1" height="1"/><rect x="20" y="17" width="1" height="1"/><rect x="16" y="19" width="1" height="1"/><rect x="19" y="19" width="1" height="1"/><rect x="17" y="20" width="1" height="1"/>
+                  </svg>
+                </div>
+                <span class="sim-pass__qr-caption">Se renueva en <span id="simQrCountdown">00:30</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sim-actions">
+          <button type="button" class="btn-primary" id="simVisitBtn">Simular una visita</button>
+          <button type="button" class="sim-reset" id="simResetBtn">Reiniciar</button>
+        </div>
+        <p class="sim-footnote">Demo ilustrativa. La tarjeta real se personaliza contigo en la instalación.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. LA TARJETA POR DENTRO (WALLET) -->
+  <section class="section" id="wallet">
+    <h2 class="sr-only">La tarjeta dentro de Apple Wallet</h2>
+    <div class="wallet-grid">
+      <div class="wallet-images reveal">
+        <figure class="ph wallet-ph phone-shot" style="--ph-ratio:4/7" data-ph="IMG-02 · 4:7 · Captura de pantalla — pass en Apple Wallet, captura limpia">
+          <picture>
+            <source type="image/webp" srcset="assets/wallet/pass-ios-520.webp 520w, assets/wallet/pass-ios.webp 870w" sizes="(max-width: 900px) min(88vw, 360px), 360px" />
+            <img src="assets/wallet/pass-ios.png" alt="Tarjeta de lealtad de Copo en Apple Wallet" width="870" height="1807" loading="lazy" decoding="async" />
+          </picture>
+          <div class="ph-fallback">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="8.5" cy="9.5" r="1.4" stroke="currentColor" stroke-width="1.4"/><path d="M4 16l5-4.5 4 3.5 3-2.5 4 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="ph-id">IMG-02</span><span class="ph-ratio">4:7</span>
+            <span class="ph-desc">Pass en Apple Wallet, captura limpia, sin barra de estado editada</span>
+          </div>
+        </figure>
+      </div>
+      <div class="wallet-notes reveal">
+        <p>Vive en el Wallet, junto a sus tarjetas y sus pases de avión. No compite con nada.</p>
+        <p>Cuando le pones un sello, se actualiza sola en su teléfono.</p>
+        <p>Si le cambias el logo o el color a tu tarjeta, se actualizan todas las que ya emitiste.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. LO QUE SÍ CONTROLA EL DUEÑO -->
+  <section class="section" id="funciones" style="background:var(--surface)">
+    <h2 class="sr-only">Control y seguridad para el dueño del negocio</h2>
+    <div class="owner-grid">
+      <div class="owner-list reveal">
+        <div class="owner-item">
+          <h3>El sello va atado a una venta.</h3>
+          <p>No hay botón de regalar puntos. Si no hubo compra, no hay sello.</p>
+        </div>
+        <div class="owner-item">
+          <h3>Un sello por persona al día.</h3>
+          <p>Tú defines el tope y el monto mínimo de compra.</p>
+        </div>
+        <div class="owner-item">
+          <h3>Queda registrado quién lo puso.</h3>
+          <p>Cada movimiento guarda cajero, dispositivo y método de verificación.</p>
+        </div>
+        <div class="owner-item">
+          <h3>Y al cliente le llega el aviso.</h3>
+          <p>Si algo no cuadra, el primero en enterarse es él.</p>
+        </div>
+        <p class="owner-closing">Además te llevas la base: nombre, teléfono y correo de cada cliente que se registró. Es tuya.</p>
+      </div>
+      <figure class="ph product-shot reveal" style="--ph-ratio:14/9" data-ph="IMG-07 · 14:9 · Captura de UI — panel de movimientos o anomalías, con el registro por cajero">
+        <img src="assets/screenshots/panel-anomalias.png" alt="Panel de movimientos y anomalías del dashboard de Copo Loyalty, con el registro por cajero" width="1917" height="861" loading="lazy" decoding="async" />
+        <div class="ph-fallback">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="8.5" cy="9.5" r="1.4" stroke="currentColor" stroke-width="1.4"/><path d="M4 16l5-4.5 4 3.5 3-2.5 4 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="ph-id">IMG-07</span><span class="ph-ratio">14:9</span>
+          <span class="ph-desc">Panel de movimientos o anomalías, con el registro por cajero</span>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 7. CÓMO SE ESCANEA -->
+  <section class="section" id="escaneo">
+    <div class="section-head center reveal">
+      <h2 class="section-title">Cómo se escanea</h2>
+    </div>
+    <div class="scan-rows reveal">
+      <div class="scan-row scan-row--a">
+        <div class="scan-row__text"><h3>Con el celular que traes.</h3><p>Abres una página en el navegador, apuntas la cámara al QR del cliente y listo. Sin instalar nada.</p></div>
+        <span class="scan-row__tag">Sin costo</span>
+      </div>
+      <div class="scan-row scan-row--b">
+        <div class="scan-row__text"><h3>Con la app de Copo.</h3><p>Si ya usas el POS en tablet o computadora, el loyalty ya está adentro.</p></div>
+        <span class="scan-row__tag">Ya lo tienes</span>
+      </div>
+      <div class="scan-row scan-row--a">
+        <div class="scan-row__text"><h3>Con lector USB.</h3><p>Si tienes caja fija, el lector de código de barras de siempre funciona.</p></div>
+        <span class="scan-row__tag">Automático</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. PARA QUÉ TIPO DE NEGOCIO SIRVE -->
+  <section class="section" style="background:var(--surface)">
+    <h2 class="trade-lead reveal">Si tu cliente vuelve, te sirve.</h2>
+    <div class="trade-marquee reveal" id="tradeMarquee">
+      <button class="trade-marquee__toggle" id="tradeMarqueeToggle" type="button" aria-pressed="false" aria-label="Pausar movimiento de giros de negocio">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7 5v10M13 5v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>Pausar movimiento</span>
+      </button>
+      <div class="trade-row trade-row--a">
+        <div class="trade-track">
+          <span class="trade-set">Cafeterías · Heladerías · Pastelerías · Hot dogs · Barberías · Estéticas · Uñas · Gimnasios · Autolavados</span>
+          <span class="trade-set" aria-hidden="true">Cafeterías · Heladerías · Pastelerías · Hot dogs · Barberías · Estéticas · Uñas · Gimnasios · Autolavados</span>
+        </div>
+      </div>
+      <div class="trade-row trade-row--b">
+        <div class="trade-track">
+          <span class="trade-set">Veterinarias · Lavanderías · Food trucks · Cerveza artesanal · Juguerías · Spas · Tatuajes · Peluquerías caninas · Tintorerías</span>
+          <span class="trade-set" aria-hidden="true">Veterinarias · Lavanderías · Food trucks · Cerveza artesanal · Juguerías · Spas · Tatuajes · Peluquerías caninas · Tintorerías</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. SI YA USAS EL POS COPO -->
+  <section class="dark-cta-section" id="con-pos">
+    <div class="dark-cta-content reveal">
+      <h2>Si cobras con Copo, el sello se pone solo.</h2>
+      <p>El cajero no toca nada extra: cobra la orden y el sello se registra con la venta. Cero pasos, cero olvidos, cero trampas.</p>
+      <p class="dark-cta-highlight">Y si tienes el POS, el loyalty te cuesta $50 menos al mes.</p>
+      <a href="https://www.copopos.com/" target="_blank" rel="noopener noreferrer" class="btn-outline-white">Ver el POS de Copo →</a>
+    </div>
+    <figure class="ph product-shot dark-cta-media reveal" style="--ph-ratio:14/9" data-ph="IMG-08 · 14:9 · Captura de UI — el paso de loyalty dentro del cobro en el POS Copo">
+      <img src="assets/screenshots/pos-checkout-loyalty.png" alt="Paso de loyalty dentro del flujo de cobro del POS de Copo" width="1222" height="551" loading="lazy" decoding="async" />
+      <div class="ph-fallback">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="8.5" cy="9.5" r="1.4" stroke="currentColor" stroke-width="1.4"/><path d="M4 16l5-4.5 4 3.5 3-2.5 4 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="ph-id">IMG-08</span><span class="ph-ratio">14:9</span>
+        <span class="ph-desc">El paso de loyalty dentro del cobro en el POS Copo</span>
+      </div>
+    </figure>
+  </section>
+
+  <!-- 10. NEGOCIOS QUE YA USAN COPO -->
+  <section class="trusted-strip" aria-labelledby="trusted-title">
+    <div class="trusted-shell">
+      <div class="trusted-intro">
+        <p class="trusted-eyebrow">Negocios locales</p>
+        <h2 id="trusted-title">Negocios que ya trabajan con Copo</h2>
+        <p>Negocios reales que ya usan Copo para cobrar, y ahora para saber quién vuelve.</p>
+        <div class="trusted-carousel-controls">
+          <button class="trusted-carousel-toggle" id="trustedCarouselToggle" type="button" aria-pressed="false" aria-label="Pausar movimiento de negocios">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7 5v10M13 5v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <span>Pausar movimiento</span>
+          </button>
+        </div>
+      </div>
+      <div class="trusted-carousel" id="trustedCarousel" role="group" aria-label="Negocios que usan Copo">
+        <div class="trusted-carousel__track">
+          <ul class="trusted-carousel__set">
+            <li class="trusted-card trusted-card--titto">
+              <div class="trusted-card__top">
+                <span class="trusted-card__eyebrow">Negocio local</span>
+                <div class="trusted-card__logo"><img src="assets/trusted/titto-bros.jpg" alt="" aria-hidden="true" width="447" height="447" loading="lazy" /></div>
+              </div>
+              <div class="trusted-card__body"><span class="trusted-card__name">Titto Bros.</span><span class="trusted-card__type">Real Ice Cream</span></div>
+            </li>
+            <li class="trusted-card trusted-card--chunky">
+              <div class="trusted-card__top">
+                <span class="trusted-card__eyebrow">Negocio local</span>
+                <div class="trusted-card__logo"><img src="assets/trusted/chunky-dogs.jpg" alt="" aria-hidden="true" width="447" height="447" loading="lazy" /></div>
+              </div>
+              <div class="trusted-card__body"><span class="trusted-card__name">Chunky Dogs</span><span class="trusted-card__type">Restaurante</span></div>
+            </li>
+          </ul>
+          <ul class="trusted-carousel__set" aria-hidden="true">
+            <li class="trusted-card trusted-card--titto">
+              <div class="trusted-card__top"><span class="trusted-card__eyebrow">Negocio local</span><div class="trusted-card__logo"><img src="assets/trusted/titto-bros.jpg" alt="" width="447" height="447" loading="lazy" /></div></div>
+              <div class="trusted-card__body"><span class="trusted-card__name">Titto Bros.</span><span class="trusted-card__type">Real Ice Cream</span></div>
+            </li>
+            <li class="trusted-card trusted-card--chunky">
+              <div class="trusted-card__top"><span class="trusted-card__eyebrow">Negocio local</span><div class="trusted-card__logo"><img src="assets/trusted/chunky-dogs.jpg" alt="" width="447" height="447" loading="lazy" /></div></div>
+              <div class="trusted-card__body"><span class="trusted-card__name">Chunky Dogs</span><span class="trusted-card__type">Restaurante</span></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. PRECIOS -->
+  <section class="section pricing" id="precios" style="background:var(--surface)">
+    <div class="section-head center reveal">
+      <h2 class="section-title">Un precio por negocio, no por tarjeta.</h2>
+      <p class="section-sub">Tarjetas ilimitadas y clientes ilimitados en todos los planes. Todo con IVA incluido.</p>
+    </div>
+
+    <div class="billing-toggle">
+      <div class="toggle-pill" id="planModeToggle" role="group" aria-label="Tipo de plan">
+        <button type="button" class="active" data-mode="loyalty" aria-pressed="true">Loyalty solo</button>
+        <button type="button" data-mode="pos" aria-pressed="false">Con POS Copo</button>
+      </div>
+      <span class="sr-only" id="pricingStatus" aria-live="polite"></span>
+    </div>
+
+    <div class="price-table-wrap reveal">
+      <table class="price-table" id="priceTable">
+        <caption class="sr-only">Precios mensuales de Copo Loyalty por número de sucursales</caption>
+        <thead><tr><th>Sucursales</th><th>Precio mensual</th><th></th></tr></thead>
+        <tbody>
+          <tr class="is-featured" data-loyalty="349" data-pos="299" data-tier="1 sucursal">
+            <td>1</td><td class="price-cell">$349</td>
+            <td><button class="plan-cta" type="button" data-open-modal data-plan="Loyalty — 1 sucursal">Empezar</button></td>
+          </tr>
+          <tr data-loyalty="549" data-pos="499" data-tier="2 a 4 sucursales">
+            <td>2 a 4</td><td class="price-cell">$549</td>
+            <td><button class="plan-cta" type="button" data-open-modal data-plan="Loyalty — 2 a 4 sucursales">Empezar</button></td>
+          </tr>
+          <tr data-loyalty="649" data-pos="599" data-tier="5 a 7 sucursales">
+            <td>5 a 7</td><td class="price-cell">$649</td>
+            <td><button class="plan-cta" type="button" data-open-modal data-plan="Loyalty — 5 a 7 sucursales">Empezar</button></td>
+          </tr>
+          <tr data-loyalty="699" data-pos="649" data-tier="8 a 10 sucursales">
+            <td>8 a 10</td><td class="price-cell">$699</td>
+            <td><button class="plan-cta" type="button" data-open-modal data-plan="Loyalty — 8 a 10 sucursales">Empezar</button></td>
+          </tr>
+          <tr data-tier="11 o más sucursales">
+            <td>11 o más</td><td class="price-cell">Cotización</td>
+            <td><button class="plan-cta" type="button" data-open-modal data-plan="Loyalty — 11 o más sucursales">Cotizar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pricing-notes reveal">
+      <p><strong>Alta del programa: $599 pago único.</strong> Incluye diseño de tu tarjeta, configuración y capacitación. Si ya tienes el POS Copo o contratas los dos juntos, el alta no se cobra.</p>
+      <p><strong>Pago anual:</strong> pagas 10 meses y te llevas 12.</p>
+      <p><strong>Prueba gratis 7 días.</strong> Sin tarjeta de crédito.</p>
+    </div>
+  </section>
+
+  <!-- 12. PREGUNTAS FRECUENTES -->
+  <section class="faq" id="preguntas">
+    <div class="section-head reveal">
+      <h2 class="section-title">Preguntas frecuentes</h2>
+    </div>
+    <div class="faq-list" style="margin-top: 40px;">
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span>¿Mi cliente tiene que descargar una app?</span><svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        <div class="faq-a"><p>No. La tarjeta se guarda en Apple Wallet o Google Wallet, que ya vienen en el teléfono.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span>¿Y si el cliente no quiere dar su teléfono?</span><svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        <div class="faq-a"><p>Es el identificador de su tarjeta. Sin él no hay tarjeta; es lo mismo que hoy ya haces cuando le pides el nombre.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span>¿Cuántas tarjetas puedo emitir?</span><svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        <div class="faq-a"><p>Ilimitadas, en todos los planes. El precio depende de tus sucursales, nunca de tus clientes.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span>¿Necesito comprar algo para escanear?</span><svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        <div class="faq-a"><p>No. Sirve la cámara de cualquier celular desde el navegador.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span>¿Se puede hacer trampa con los sellos?</span><svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        <div class="faq-a"><p>El QR del cliente cambia cada 30 segundos, el sello va atado a una compra real, hay tope de visitas por día y todo queda registrado con el cajero que lo hizo.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span>¿Funciona en varias sucursales?</span><svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        <div class="faq-a"><p>Sí. Una sola tarjeta por negocio: el cliente acumula en una sucursal y canjea en otra.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span>¿Qué premios puedo dar?</span><svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        <div class="faq-a"><p>Producto gratis, descuento en porcentaje, descuento fijo, 2x1, puntos extra o beneficios para clientes frecuentes.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span>¿Tengo que usar el POS de Copo?</span><svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        <div class="faq-a"><p>No. Loyalty funciona solo. Si además usas el POS, el sello se pone automático al cobrar y te cuesta $50 menos al mes.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button"><span>¿Qué pasa si ya tengo tarjetas de cartón?</span><svg viewBox="0 0 20 20" fill="none"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+        <div class="faq-a"><p>Las respetas: en la instalación cargamos los sellos que ya tienen tus clientes frecuentes.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. CTA FINAL -->
+  <section class="cta-section" id="contacto">
+    <h2>Empieza a saber quién vuelve a tu negocio.</h2>
+    <p class="lead">Prueba 7 días gratis. Sin tarjeta, sin compromiso.</p>
+    <div class="cta-buttons">
+      <button class="btn-white" type="button" data-open-modal data-plan="Prueba gratis 7 días">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 1l2.09 4.26L16 6.27l-3.5 3.41.83 4.82L9 12.22l-4.33 2.28.83-4.82L2 6.27l4.91-.71L9 1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        Prueba gratis 7 días
+      </button>
+      <a href="#precios" class="btn-outline-white">Ver precios</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="brand" aria-label="Copo Loyalty — inicio">
+        <img src="assets/brand/logo-mark.png" alt="" aria-hidden="true" width="30" height="30" />
+        <span>copo</span>
+        <span class="brand-tag">loyalty</span>
+      </a>
+      <p>Tarjetas de lealtad digitales para negocios de mostrador en México. Sin app para tus clientes.</p>
+      <a class="footer-instagram" href="https://www.instagram.com/copoposmx?utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Visitar Instagram de Copo, arroba copoposmx">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8" /><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8" /><circle cx="17.4" cy="6.7" r="1" fill="currentColor" /></svg>
+        <span>@copoposmx</span>
+      </a>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h5>Producto</h5>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#simulador">Tu tarjeta</a>
+        <a href="#precios">Precios</a>
+      </div>
+      <div class="footer-col">
+        <h5>Copo</h5>
+        <a href="https://www.copopos.com/" target="_blank" rel="noopener noreferrer">El POS</a>
+        <a href="https://dashboard.copopos.com/" target="_blank" rel="noopener noreferrer">Dashboard</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Copo · Hecho en México</span>
+  </div>
+</footer>
+
+<!-- FAB -->
+<button class="fab" id="fabBtn" type="button" aria-label="Escríbenos" data-open-modal data-plan="Contacto rápido">
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+</button>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <h3 id="modalTitle">Prueba Copo Loyalty gratis</h3>
+      <button class="modal-close" id="modalClose" type="button" aria-label="Cerrar"><svg viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    </div>
+    <p class="modal-sub" id="modalSub">Cuéntanos de tu negocio y te contactamos para activar tu prueba de 7 días.</p>
+    <form id="leadForm">
+      <div class="field">
+        <label for="f-nombre">Tu nombre</label>
+        <input id="f-nombre" name="nombre" type="text" required autocomplete="name" placeholder="Ej. Ana Torres" />
+      </div>
+      <div class="field">
+        <label for="f-negocio">Nombre del negocio</label>
+        <input id="f-negocio" name="negocio" type="text" required autocomplete="organization" placeholder="Ej. Cafetería La Nube" />
+      </div>
+      <div class="field">
+        <label for="f-giro">Giro</label>
+        <select id="f-giro" name="giro">
+          <option>Cafetería</option>
+          <option>Heladería</option>
+          <option>Pastelería</option>
+          <option>Barbería o estética</option>
+          <option>Gimnasio</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-sucursales">Número de sucursales</label>
+        <select id="f-sucursales" name="sucursales">
+          <option>1 sucursal</option>
+          <option>2–4 sucursales</option>
+          <option>5–7 sucursales</option>
+          <option>8–10 sucursales</option>
+          <option>11 o más</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-contacto">Teléfono o correo</label>
+        <input id="f-contacto" name="contacto" type="text" required placeholder="999 123 4567 o tú@correo.com" />
+        <small>Te contactamos en menos de 24 horas hábiles.</small>
+      </div>
+      <button class="modal-submit" type="submit">Enviar solicitud</button>
+      <p class="modal-note">Al enviar, se abrirá tu correo con los datos listos para mandarnos. No compartimos tu información con terceros.</p>
+    </form>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- THEME ---------- */
+  var root = document.documentElement;
+  var themeToggle = document.getElementById('themeToggle');
+  function readStoredTheme() {
+    try { return localStorage.getItem('copo-loyalty-theme'); }
+    catch (error) { return null; }
+  }
+  function writeStoredTheme(value) {
+    try { localStorage.setItem('copo-loyalty-theme', value); }
+    catch (error) { /* El tema sigue funcionando aunque el almacenamiento esté bloqueado. */ }
+  }
+  var stored = readStoredTheme();
+  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var initial = stored || (prefersDark ? 'dark' : 'light');
+  root.setAttribute('data-theme', initial);
+  syncToggleA11y(initial);
+
+  function syncToggleA11y(mode) {
+    themeToggle.setAttribute('aria-pressed', mode === 'dark' ? 'true' : 'false');
+    themeToggle.setAttribute('aria-label', mode === 'dark' ? 'Cambiar a modo día' : 'Cambiar a modo noche');
+  }
+
+  themeToggle.addEventListener('click', function () {
+    var current = root.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    writeStoredTheme(next);
+    syncToggleA11y(next);
+    themeToggle.classList.remove('is-popping');
+    void themeToggle.offsetWidth;
+    themeToggle.classList.add('is-popping');
+  });
+
+  /* ---------- MOBILE NAV ---------- */
+  var hamburgerBtn = document.getElementById('hamburgerBtn');
+  var mobilePanel = document.getElementById('mobilePanel');
+  var menuInertTargets = document.querySelectorAll('main, footer, #fabBtn');
+  function mobileMenuFocusables() {
+    return [hamburgerBtn].concat(Array.prototype.slice.call(mobilePanel.querySelectorAll('a, button')));
+  }
+  function closeMobileMenu(restoreFocus) {
+    mobilePanel.classList.remove('open');
+    menuInertTargets.forEach(function (element) { element.removeAttribute('inert'); });
+    document.body.style.overflow = '';
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    hamburgerBtn.setAttribute('aria-label', 'Abrir menú');
+    if (restoreFocus) hamburgerBtn.focus({ preventScroll: true });
+  }
+  hamburgerBtn.addEventListener('click', function () {
+    var open = mobilePanel.classList.toggle('open');
+    hamburgerBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    hamburgerBtn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    if (open) {
+      menuInertTargets.forEach(function (element) { element.setAttribute('inert', ''); });
+      document.body.style.overflow = 'hidden';
+      var firstLink = mobilePanel.querySelector('a, button');
+      if (firstLink) firstLink.focus({ preventScroll: true });
+    }
+  });
+  mobilePanel.querySelectorAll('a, button').forEach(function (el) {
+    el.addEventListener('click', function () {
+      closeMobileMenu(true);
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!mobilePanel.classList.contains('open')) return;
+    if (e.key === 'Escape') {
+      closeMobileMenu(true);
+      return;
+    }
+    if (e.key === 'Tab') {
+      var focusables = mobileMenuFocusables();
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    }
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 1100 && mobilePanel.classList.contains('open')) closeMobileMenu(false);
+  });
+
+  /* ---------- SNOWFLAKE FIELD ---------- */
+  var snowField = document.getElementById('snow-field');
+  if (snowField && !reduceMotion) {
+    var flakeSvg = '<svg viewBox="0 0 24 24" fill="none" width="100%" height="100%"><path d="M12 2v20M12 2l-2 2M12 2l2 2M12 22l-2-2M12 22l2-2M2 12h20M2 12l2-2M2 12l2 2M22 12l-2-2M22 12l-2 2M5 5l14 14M5 5l0 3M5 5l3 0M19 19l0-3M19 19l-3 0M19 5L5 19M19 5l-3 0M19 5l0 3M5 19l3 0M5 19l0-3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>';
+    var count = window.innerWidth < 640 ? 7 : 14;
+    for (var i = 0; i < count; i++) {
+      var flake = document.createElement('div');
+      flake.className = 'flake';
+      flake.innerHTML = flakeSvg;
+      var size = 10 + Math.random() * 16;
+      flake.style.width = size + 'px';
+      flake.style.height = size + 'px';
+      flake.style.left = (Math.random() * 100) + '%';
+      flake.style.top = (Math.random() * 90) + '%';
+      var dur = 7000 + Math.random() * 6000;
+      var delay = Math.random() * 3000;
+      var tx = (Math.random() > 0.5 ? 1 : -1) * (15 + Math.random() * 30);
+      var ty = (Math.random() > 0.5 ? 1 : -1) * (30 + Math.random() * 50);
+      var rot = (Math.random() > 0.5 ? 1 : -1) * 360;
+      flake.style.setProperty('--tx', tx + 'px');
+      flake.style.setProperty('--ty', ty + 'px');
+      flake.style.setProperty('--rot', rot + 'deg');
+      flake.style.animation = 'flake-drift ' + dur + 'ms ease-in-out ' + delay + 'ms infinite alternate';
+      snowField.appendChild(flake);
+    }
+  }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    revealEls.forEach(function (el) { el.classList.add('reveal-pending'); });
+    var groups = {};
+    revealEls.forEach(function (el) {
+      var parent = el.parentElement;
+      var key = parent ? parent.className : 'default';
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(el);
+    });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        io.unobserve(el);
+        if (!reduceMotion) {
+          var siblings = groups[(el.parentElement || {}).className] || [el];
+          var idx = siblings.indexOf(el);
+          el.style.transitionDelay = (Math.max(0, idx) * 70) + 'ms';
+        }
+        el.classList.add('is-visible');
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+  }
+
+  /* ---------- PLACEHOLDER IMAGES (§7.1) ---------- */
+  document.querySelectorAll('.ph img').forEach(function (img) {
+    function markLoaded() {
+      var frame = img.closest('.ph');
+      frame.classList.remove('is-empty');
+      frame.classList.add('is-loaded');
+    }
+    function markEmpty() {
+      var frame = img.closest('.ph');
+      frame.classList.remove('is-loaded');
+      frame.classList.add('is-empty');
+    }
+    img.addEventListener('load', markLoaded, { once: true });
+    img.addEventListener('error', markEmpty, { once: true });
+    if (img.complete) img.naturalWidth > 0 ? markLoaded() : markEmpty();
+  });
+
+  /* ---------- TRUSTED CAROUSEL ---------- */
+  var trustedCarousel = document.getElementById('trustedCarousel');
+  var trustedCarouselToggle = document.getElementById('trustedCarouselToggle');
+  if (trustedCarousel && trustedCarouselToggle) {
+    trustedCarouselToggle.addEventListener('click', function () {
+      var paused = trustedCarousel.classList.toggle('is-paused');
+      trustedCarouselToggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      trustedCarouselToggle.setAttribute('aria-label', paused ? 'Reanudar movimiento de negocios' : 'Pausar movimiento de negocios');
+      trustedCarouselToggle.innerHTML = paused
+        ? '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m7 4 8 6-8 6V4z" fill="currentColor"/></svg><span>Reanudar movimiento</span>'
+        : '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7 5v10M13 5v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Pausar movimiento</span>';
+    });
+  }
+
+  /* ---------- TRADE MARQUEE ---------- */
+  var tradeMarquee = document.getElementById('tradeMarquee');
+  var tradeMarqueeToggle = document.getElementById('tradeMarqueeToggle');
+  if (tradeMarquee && tradeMarqueeToggle) {
+    tradeMarqueeToggle.addEventListener('click', function () {
+      var paused = tradeMarquee.classList.toggle('is-paused');
+      tradeMarqueeToggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      tradeMarqueeToggle.setAttribute('aria-label', paused ? 'Reanudar movimiento de giros de negocio' : 'Pausar movimiento de giros de negocio');
+      tradeMarqueeToggle.innerHTML = paused
+        ? '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m7 4 8 6-8 6V4z" fill="currentColor"/></svg><span>Reanudar movimiento</span>'
+        : '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7 5v10M13 5v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Pausar movimiento</span>';
+    });
+  }
+
+  /* ---------- FAQ ACCORDION ---------- */
+  var faq = document.querySelector('.faq');
+  if (faq) faq.classList.add('is-enhanced');
+  document.querySelectorAll('.faq-item').forEach(function (item, index) {
+    var q = item.querySelector('.faq-q');
+    var a = item.querySelector('.faq-a');
+    q.id = 'faq-question-' + (index + 1);
+    a.id = 'faq-answer-' + (index + 1);
+    q.setAttribute('aria-expanded', 'false');
+    q.setAttribute('aria-controls', a.id);
+    a.setAttribute('role', 'region');
+    a.setAttribute('aria-labelledby', q.id);
+    a.setAttribute('aria-hidden', 'true');
+    q.addEventListener('click', function () {
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function (other) {
+        if (other !== item) {
+          var otherQ = other.querySelector('.faq-q');
+          var otherA = other.querySelector('.faq-a');
+          other.classList.remove('open');
+          otherQ.setAttribute('aria-expanded', 'false');
+          otherA.setAttribute('aria-hidden', 'true');
+          otherA.style.maxHeight = null;
+        }
+      });
+      if (isOpen) {
+        item.classList.remove('open');
+        q.setAttribute('aria-expanded', 'false');
+        a.setAttribute('aria-hidden', 'true');
+        a.style.maxHeight = null;
+      } else {
+        item.classList.add('open');
+        q.setAttribute('aria-expanded', 'true');
+        a.setAttribute('aria-hidden', 'false');
+        a.style.maxHeight = a.scrollHeight + 'px';
+      }
+    });
+  });
+
+  /* ---------- PRICING TOGGLE ---------- */
+  var planModeToggle = document.getElementById('planModeToggle');
+  var pricingStatus = document.getElementById('pricingStatus');
+  if (planModeToggle) {
+    planModeToggle.addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-mode]');
+      if (!btn) return;
+      var mode = btn.getAttribute('data-mode');
+      planModeToggle.querySelectorAll('button').forEach(function (b) {
+        var selected = b === btn;
+        b.classList.toggle('active', selected);
+        b.setAttribute('aria-pressed', selected ? 'true' : 'false');
+      });
+      document.querySelectorAll('#priceTable tbody tr').forEach(function (row) {
+        var val = row.getAttribute('data-' + mode);
+        var cell = row.querySelector('.price-cell');
+        if (val && cell) cell.textContent = '$' + val;
+        var cta = row.querySelector('[data-open-modal]');
+        if (cta) {
+          var tier = row.getAttribute('data-tier');
+          cta.setAttribute('data-plan', (mode === 'pos' ? 'Con POS Copo — ' : 'Loyalty — ') + tier);
+        }
+      });
+      if (pricingStatus) pricingStatus.textContent = mode === 'pos' ? 'Precios con POS Copo actualizados.' : 'Precios de Loyalty solo actualizados.';
+    });
+  }
+
+  /* ---------- SIMULADOR DE TARJETA (§6.4) ---------- */
+  var simNameEl = document.getElementById('sim-name');
+  var simSwatches = document.getElementById('simSwatches');
+  var simTabs = document.getElementById('simTabs');
+  var simGoalField = document.getElementById('simGoalField');
+  var simGoalEl = document.getElementById('sim-goal');
+  var simGoalValueEl = document.getElementById('simGoalValue');
+  var simPrizeEl = document.getElementById('sim-prize');
+  var simPass = document.getElementById('simPass');
+  var simInitials = document.getElementById('simInitials');
+  var simPassName = document.getElementById('simPassName');
+  var simProgramLabel = document.getElementById('simProgramLabel');
+  var simCounter = document.getElementById('simCounter');
+  var simStamps = document.getElementById('simStamps');
+  var simPrizeText = document.getElementById('simPrizeText');
+  var simRewardBadge = document.getElementById('simRewardBadge');
+  var simToast = document.getElementById('simToast');
+  var simToastIcon = document.getElementById('simToastIcon');
+  var simToastText = document.getElementById('simToastText');
+  var simVisitBtn = document.getElementById('simVisitBtn');
+  var simResetBtn = document.getElementById('simResetBtn');
+  var simQrCountdown = document.getElementById('simQrCountdown');
+
+  if (simPass) {
+    var sim = { name: 'Cafetería La Nube', color: '#2E5CF6', program: 'sellos', goal: 8, prize: 'Un café gratis', filled: 0, points: 0, rewardReady: false, toastTimer: null };
+
+    function initialsOf(name) {
+      var parts = name.trim().split(/\s+/).filter(Boolean);
+      if (!parts.length) return '';
+      if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+
+    function two(n) { return String(n).padStart(2, '0'); }
+
+    function renderStamps() {
+      simStamps.innerHTML = '';
+      for (var i = 0; i < sim.goal; i++) {
+        var s = document.createElement('span');
+        s.className = 'sim-stamp' + (i < sim.filled ? ' is-filled' : '');
+        simStamps.appendChild(s);
+      }
+    }
+
+    function renderAll() {
+      simPass.style.setProperty('--sim-color', sim.color);
+      var ini = initialsOf(sim.name) || 'CN';
+      simInitials.textContent = ini;
+      simToastIcon.textContent = ini;
+      simPassName.textContent = sim.name;
+      simPrizeText.textContent = sim.prize;
+      simPass.classList.toggle('program-puntos', sim.program === 'puntos');
+      if (sim.program === 'sellos') {
+        simProgramLabel.textContent = 'SELLOS';
+        simCounter.textContent = sim.filled + ' de ' + sim.goal;
+        renderStamps();
+      } else {
+        simProgramLabel.textContent = 'PUNTOS';
+        simCounter.textContent = sim.points + ' pts';
+      }
+      simPass.classList.toggle('is-reward-ready', sim.rewardReady);
+    }
+
+    simNameEl.addEventListener('input', function () { sim.name = simNameEl.value || 'Tu negocio'; renderAll(); });
+    simPrizeEl.addEventListener('input', function () { sim.prize = simPrizeEl.value || 'Tu premio'; renderAll(); });
+
+    simSwatches.addEventListener('click', function (e) {
+      var btn = e.target.closest('.sim-swatch');
+      if (!btn) return;
+      sim.color = btn.getAttribute('data-color');
+      simSwatches.querySelectorAll('.sim-swatch').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+      renderAll();
+    });
+
+    simTabs.addEventListener('click', function (e) {
+      var btn = e.target.closest('.sim-tab');
+      if (!btn) return;
+      sim.program = btn.getAttribute('data-program');
+      simTabs.querySelectorAll('.sim-tab').forEach(function (b) {
+        b.classList.toggle('active', b === btn);
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+      simGoalField.style.display = sim.program === 'sellos' ? '' : 'none';
+      sim.filled = 0; sim.points = 0; sim.rewardReady = false;
+      renderAll();
+    });
+
+    simGoalEl.addEventListener('input', function () {
+      sim.goal = parseInt(simGoalEl.value, 10);
+      simGoalValueEl.textContent = sim.goal;
+      sim.filled = Math.min(sim.filled, sim.goal);
+      renderAll();
+    });
+
+    function showToast() {
+      simToastText.textContent = 'Ya tienes tu premio en ' + sim.name + ' 🎉';
+      simToast.classList.add('is-visible');
+      if (sim.toastTimer) clearTimeout(sim.toastTimer);
+      sim.toastTimer = setTimeout(function () { simToast.classList.remove('is-visible'); }, 4000);
+    }
+
+    simVisitBtn.addEventListener('click', function () {
+      if (sim.program === 'puntos') {
+        sim.points += 20;
+        renderAll();
+        return;
+      }
+      if (sim.rewardReady) {
+        sim.filled = 0;
+        sim.rewardReady = false;
+        renderAll();
+        return;
+      }
+      sim.filled = Math.min(sim.filled + 1, sim.goal);
+      renderAll();
+      var lastStamp = simStamps.children[sim.filled - 1];
+      if (lastStamp) {
+        lastStamp.classList.add('just-stamped');
+        setTimeout(function () { lastStamp.classList.remove('just-stamped'); }, 260);
+      }
+      simPass.classList.remove('is-shaking');
+      void simPass.offsetWidth;
+      simPass.classList.add('is-shaking');
+      if (sim.filled >= sim.goal) {
+        sim.rewardReady = true;
+        renderAll();
+        showToast();
+      }
+    });
+
+    simResetBtn.addEventListener('click', function () {
+      sim.filled = 0; sim.points = 0; sim.rewardReady = false;
+      simToast.classList.remove('is-visible');
+      renderAll();
+    });
+
+    renderAll();
+
+    var qrSeconds = 30;
+    simQrCountdown.textContent = '00:' + two(qrSeconds);
+    setInterval(function () {
+      qrSeconds -= 1;
+      if (qrSeconds < 0) qrSeconds = 30;
+      simQrCountdown.textContent = '00:' + two(qrSeconds);
+    }, 1000);
+  }
+
+  /* ---------- MODAL ---------- */
+  var backdrop = document.getElementById('modalBackdrop');
+  var modalBox = backdrop.querySelector('.modal-box');
+  var modalTitle = document.getElementById('modalTitle');
+  var modalSub = document.getElementById('modalSub');
+  var modalClose = document.getElementById('modalClose');
+  var lastFocused = null;
+  var inertTargets = document.querySelectorAll('nav.site-nav, #mobilePanel, main, footer, #fabBtn');
+
+  function modalFocusables() {
+    return modalBox.querySelectorAll('button:not([disabled]), input:not([disabled]), select:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])');
+  }
+
+  function openModal(plan) {
+    lastFocused = document.activeElement;
+    modalTitle.textContent = plan ? 'Solicitar: ' + plan : 'Prueba Copo Loyalty gratis';
+    modalSub.textContent = 'Cuéntanos de tu negocio y te contactamos para activar tu ' + (plan ? plan.toLowerCase() : 'prueba gratis') + '.';
+    backdrop.classList.add('open');
+    inertTargets.forEach(function (element) { element.setAttribute('inert', ''); });
+    document.body.style.overflow = 'hidden';
+    var firstInput = modalBox.querySelector('input');
+    if (firstInput) setTimeout(function () { firstInput.focus(); }, 60);
+  }
+
+  function closeModal() {
+    backdrop.classList.remove('open');
+    inertTargets.forEach(function (element) { element.removeAttribute('inert'); });
+    document.body.style.overflow = '';
+    if (lastFocused && document.contains(lastFocused) && lastFocused.offsetParent !== null) {
+      lastFocused.focus({ preventScroll: true });
+    }
+  }
+
+  document.querySelectorAll('[data-open-modal]').forEach(function (trigger) {
+    trigger.addEventListener('click', function (e) {
+      e.preventDefault();
+      openModal(trigger.getAttribute('data-plan'));
+    });
+  });
+
+  modalClose.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', function (e) { if (e.target === backdrop) closeModal(); });
+  document.addEventListener('keydown', function (e) {
+    if (!backdrop.classList.contains('open')) return;
+    if (e.key === 'Escape') {
+      closeModal();
+      return;
+    }
+    if (e.key === 'Tab') {
+      var focusables = modalFocusables();
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    }
+  });
+
+  document.getElementById('leadForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = new FormData(e.target);
+    var subject = encodeURIComponent('Solicitud Copo Loyalty — ' + modalTitle.textContent.replace('Solicitar: ', ''));
+    var body = encodeURIComponent(
+      'Nombre: ' + data.get('nombre') + '\n' +
+      'Negocio: ' + data.get('negocio') + '\n' +
+      'Giro: ' + data.get('giro') + '\n' +
+      'Sucursales: ' + data.get('sucursales') + '\n' +
+      'Teléfono / correo: ' + data.get('contacto')
+    );
+    window.location.href = 'mailto:hola@copo.mx?subject=' + subject + '&body=' + body;
+    closeModal();
+    e.target.reset();
+  });
+})();
+</script>
+<script src="assets/landing.js"></script>
+
+</body>
+</html>
